@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "react-notifications/lib/notifications.css";
 
 import "./App.css";
 import Form from "./components/Form";

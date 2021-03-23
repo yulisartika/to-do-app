@@ -1,4 +1,8 @@
 import React from "react";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const Form = ({ inputText, setInputText, todos, setTodos, setStatus }) => {
   const inputTextHandler = (e) => {
@@ -21,25 +25,40 @@ const Form = ({ inputText, setInputText, todos, setTodos, setStatus }) => {
     setStatus(e.target.value);
   };
 
+  const submitNoTextHandler = (e) => {
+    e.preventDefault();
+    NotificationManager.warning("input your list");
+  };
+
   return (
-    <form>
-      <input
-        type="text"
-        className="todo-input"
-        value={inputText}
-        onChange={inputTextHandler}
-      />
-      <button className="todo-button" type="submit" onClick={submitTodoHandler}>
-        <i className="fas fa-plus-square"></i>
-      </button>
-      <div className="select">
-        <select name="todos" className="filter-todo" onChange={statusHandler}>
-          <option value="all">All</option>
-          <option value="completed">Completed</option>
-          <option value="uncompleted">Uncompleted</option>
-        </select>
-      </div>
-    </form>
+    <>
+      <form>
+        <input
+          type="text"
+          className="todo-input"
+          value={inputText}
+          onChange={inputTextHandler}
+          // required
+        />
+        <button
+          className="todo-button"
+          type="submit"
+          onClick={(e) =>
+            inputText !== "" ? submitTodoHandler(e) : submitNoTextHandler(e)
+          }
+        >
+          <i className="fas fa-plus-square"></i>
+        </button>
+        <div className="select">
+          <select name="todos" className="filter-todo" onChange={statusHandler}>
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="uncompleted">Uncompleted</option>
+          </select>
+        </div>
+      </form>
+      <NotificationContainer />
+    </>
   );
 };
 
